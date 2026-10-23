@@ -98,4 +98,30 @@ describe('GET /api/learners/:learnerId/progress', () => {
     expect(res.body.courses).toHaveLength(1);
     expect(res.body.courses[0].courseId).toBe('course-safety');
   });
+
+  it('estimates remaining time from incomplete lesson counts', async () => {
+    const res = await request(app).get('/api/learners/1/progress');
+    const onboarding = res.body.courses.find(
+      (c: { courseId: string }) => c.courseId === 'course-onboarding',
+    );
+    const compliance = res.body.courses.find(
+      (c: { courseId: string }) => c.courseId === 'course-compliance',
+    );
+
+    expect(onboarding).toMatchObject({
+      remainingLessonCount: 2,
+      estimatedMinutesRemaining: 40,
+    });
+    expect(compliance).toMatchObject({
+      remainingLessonCount: 1,
+      estimatedMinutesRemaining: 20,
+    });
+  });
+
+  it('returns an empty list when the learner has no in-progress courses', async () => {
+    const res = await request(app).get('/api/learners/3/progress');
+    expect(res.status).toBe(200);
+    expect(res.body.learnerId).toBe(3);
+    expect(res.body.courses).toEqual([]);
+  });
 });

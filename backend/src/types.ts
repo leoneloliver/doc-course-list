@@ -27,6 +27,13 @@ export interface CourseProgress {
   status: 'in_progress';
   /** Set when last activity is older than the stale threshold (see progressService). */
   isStale?: boolean;
+  /** Incomplete lessons remaining. Used to estimate time left. */
+  remainingLessonCount: number;
+  /**
+   * remainingLessonCount * MINUTES_PER_LESSON.
+   * Seed data has no per-lesson duration, so this is a planning estimate.
+   */
+  estimatedMinutesRemaining: number;
 }
 
 export interface LearnerProgressResponse {

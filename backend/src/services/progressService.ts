@@ -6,6 +6,12 @@ import type { CourseEnrollment, CourseProgress } from '../types';
 export const STALE_DAYS = 30;
 
 /**
+ * Default lesson length when seed data has no duration.
+ * One extra business rule: surface estimated time remaining from incomplete lessons.
+ */
+export const MINUTES_PER_LESSON = 20;
+
+/**
  * Return in-progress courses for a learner, sorted by last activity (most recent first).
  *
  * TODO — implement this function to pass `tests/progress.api.test.ts`:
@@ -50,6 +56,14 @@ export function isEnrollmentStale(lastActivityAt: string, now: Date = new Date()
   return diffDays > STALE_DAYS;
 }
 
+export function countRemainingLessons(enrollment: CourseEnrollment): number {
+  return enrollment.lessons.filter((lesson) => !lesson.completed).length;
+}
+
+export function estimateMinutesRemaining(enrollment: CourseEnrollment): number {
+  return countRemainingLessons(enrollment) * MINUTES_PER_LESSON;
+}
+
 function toCourseProgress(enrollment: CourseEnrollment): CourseProgress {
   return {
     courseId: enrollment.courseId,
@@ -58,5 +72,7 @@ function toCourseProgress(enrollment: CourseEnrollment): CourseProgress {
     lastActivityAt: enrollment.lastActivityAt,
     status: 'in_progress',
     isStale: isEnrollmentStale(enrollment.lastActivityAt),
+    remainingLessonCount: countRemainingLessons(enrollment),
+    estimatedMinutesRemaining: estimateMinutesRemaining(enrollment),
   };
 }
