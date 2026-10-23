@@ -5,6 +5,39 @@
 **AI policy:** **On** — Cursor, Claude, Copilot, and similar tools are encouraged  
 **Stack:** TypeScript backend + **pick one primary frontend: Angular or React**
 
+## This submission — run locally
+
+Frontend shipped: **React** (`frontend-angular/` is unused). Node 20+. Keep ports **3001** and **5173** free.
+
+Terminal 1:
+
+```bash
+cd backend && npm install && npm test && npm run dev
+```
+
+Terminal 2:
+
+```bash
+cd frontend-react && npm install && npm run dev
+```
+
+Open http://localhost:5173.
+
+## Demo
+
+The learner dropdown is stub auth (not a course filter). Quick wins is optional and filters **courses** with ≤ 30 minutes estimated remaining.
+
+| Learner | What you should see |
+|---------|---------------------|
+| 1 | Three in-progress courses. Compliance is Inactive (stale) and a Quick win (~20 min). |
+| 2 | One course (Workplace Safety). |
+| 3 | Empty state — no in-progress courses. |
+| 999 | Error + Try again. |
+
+Click a card to select it. In the browser console you should see `[analytics]` JSON (`course_progress_viewed` on load, `course_selected` on click).
+
+Product notes: [`PRODUCT.md`](./PRODUCT.md). AI use: [`AI_USAGE.md`](./AI_USAGE.md).
+
 ## Prerequisites
 
 - **Node.js 20+** and **npm** (`node -v` — Node 18 will not run the Angular starter)
