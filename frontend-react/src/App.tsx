@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { BookOpen, Calendar, Clock, ListChecks, Pause, User, Zap } from 'lucide-react';
 import { track } from './analytics';
 import type { ApiErrorBody, CourseProgress, LearnerProgressResponse } from './types';
 
@@ -87,7 +88,10 @@ export function App() {
 
       <div className="toolbar">
         <label className="field">
-          <span>Learner</span>
+          <span className="field-label">
+            <User size={13} strokeWidth={2.25} aria-hidden="true" />
+            Learner
+          </span>
           <select
             value={learnerId}
             onChange={(event) => setLearnerId(Number(event.target.value))}
@@ -147,9 +151,19 @@ export function App() {
                 }
                 onClick={() => selectCourse(course)}
               >
-                <h2>{course.title}</h2>
+                <h2 className="course-title">
+                  <BookOpen size={17} strokeWidth={2} aria-hidden="true" />
+                  {course.title}
+                </h2>
                 <p className="meta">
-                  {course.completionPercentage}% complete · {formatLastActivity(course.lastActivityAt)}
+                  <span className="completion">
+                    {course.completionPercentage}% complete
+                  </span>
+                  {' · '}
+                  <span className="meta-icon">
+                    <Calendar size={14} strokeWidth={2} aria-hidden="true" />
+                    {formatLastActivity(course.lastActivityAt)}
+                  </span>
                 </p>
                 <div
                   className="bar"
@@ -168,13 +182,32 @@ export function App() {
                   />
                 </div>
                 <p className="meta">
-                  {course.remainingLessonCount}{' '}
-                  {course.remainingLessonCount === 1 ? 'lesson' : 'lessons'} left · about{' '}
-                  {course.estimatedMinutesRemaining} min remaining
+                  <span className="meta-icon">
+                    <ListChecks size={14} strokeWidth={2} aria-hidden="true" />
+                    {course.remainingLessonCount}{' '}
+                    {course.remainingLessonCount === 1 ? 'lesson' : 'lessons'} left
+                  </span>
+                  {' · '}
+                  <span className="meta-icon">
+                    <Clock size={14} strokeWidth={2} aria-hidden="true" />
+                    about {course.estimatedMinutesRemaining} min remaining
+                  </span>
                 </p>
-                {course.isStale ? <span className="badge">Inactive</span> : null}
-                {course.estimatedMinutesRemaining <= QUICK_WIN_MINUTES ? (
-                  <span className="badge badge-win">Quick win</span>
+                {course.isStale || course.estimatedMinutesRemaining <= QUICK_WIN_MINUTES ? (
+                  <div className="badge-row">
+                    {course.isStale ? (
+                      <span className="badge">
+                        <Pause size={12} strokeWidth={2.4} aria-hidden="true" />
+                        Inactive
+                      </span>
+                    ) : null}
+                    {course.estimatedMinutesRemaining <= QUICK_WIN_MINUTES ? (
+                      <span className="badge badge-win">
+                        <Zap size={12} strokeWidth={2.4} aria-hidden="true" />
+                        Quick win
+                      </span>
+                    ) : null}
+                  </div>
                 ) : null}
               </button>
             </li>

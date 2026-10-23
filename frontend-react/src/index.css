@@ -49,6 +49,16 @@ h1 {
   color: #78716c;
 }
 
+.field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.field-label svg {
+  flex: none;
+}
+
 .field select {
   appearance: none;
   min-width: 16.5rem;
@@ -233,15 +243,39 @@ h1 {
   box-shadow: 0 0 0 1px #c2410c;
 }
 
-.course h2 {
+.course h2,
+.course-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   margin: 0 0 0.35rem;
   font-size: 1.05rem;
+}
+
+.course-title svg {
+  flex: none;
+  color: #c2410c;
 }
 
 .meta {
   margin: 0;
   color: #57534e;
   font-size: 0.88rem;
+}
+
+.completion {
+  font-weight: 650;
+  color: #1c1917;
+}
+
+.meta-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.meta-icon svg {
+  flex: none;
 }
 
 .bar {
@@ -301,17 +335,32 @@ h1 {
   }
 }
 
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+
 .badge {
-  display: inline-block;
-  margin-top: 0.65rem;
-  margin-right: 0.45rem;
-  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.22rem 0.55rem 0.22rem 0.42rem;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #a16207;
+  font-size: 0.7rem;
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: #a16207;
+}
+
+.badge svg {
+  flex: none;
 }
 
 .badge-win {
+  background: #dcfce7;
   color: #166534;
 }
