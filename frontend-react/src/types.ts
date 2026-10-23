@@ -5,9 +5,15 @@ export type CourseProgress = {
   lastActivityAt: string;
   status: string;
   isStale?: boolean;
+  remainingLessonCount: number;
+  estimatedMinutesRemaining: number;
 };
 
 export type LearnerProgressResponse = {
   learnerId: number;
   courses: CourseProgress[];
+};
+
+export type ApiErrorBody = {
+  error?: string;
 };

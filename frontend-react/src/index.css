@@ -30,6 +30,68 @@ h1 {
   color: #57534e;
 }
 
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+  align-items: end;
+  margin: 0 0 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: #57534e;
+}
+
+.field select {
+  min-width: 16rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #e7e0d8;
+  border-radius: 8px;
+  background: #fffcf8;
+  color: #1c1917;
+  font: inherit;
+}
+
+.toggle {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.88rem;
+  color: #44403c;
+}
+
+.status {
+  margin: 0;
+  color: #57534e;
+}
+
+.panel {
+  background: #fffcf8;
+  border: 1px solid #e7e0d8;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+
+.panel-error {
+  border-color: #fecaca;
+  background: #fff7f7;
+}
+
+.panel button {
+  margin-top: 0.6rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #e7e0d8;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
 .course-list {
   list-style: none;
   padding: 0;
@@ -40,10 +102,21 @@ h1 {
 }
 
 .course {
+  display: block;
+  width: 100%;
+  text-align: left;
   background: #fffcf8;
   border: 1px solid #e7e0d8;
   border-radius: 10px;
   padding: 1rem 1.1rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.course-selected {
+  border-color: #c2410c;
+  box-shadow: 0 0 0 1px #c2410c;
 }
 
 .course h2 {
@@ -57,12 +130,31 @@ h1 {
   font-size: 0.88rem;
 }
 
+.bar {
+  height: 0.35rem;
+  margin: 0.55rem 0 0.55rem;
+  background: #e7e0d8;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  background: #c2410c;
+}
+
 .badge {
   display: inline-block;
   margin-top: 0.65rem;
+  margin-right: 0.45rem;
   font-size: 0.72rem;
   font-weight: 650;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: #a16207;
+}
+
+.badge-win {
+  color: #166534;
 }
