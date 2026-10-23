@@ -23,11 +23,16 @@ export function getInProgressCourses(learnerId: number): CourseProgress[] {
     throw new NotFoundError(`Learner ${learnerId} not found`);
   }
 
-  // Baseline stub: returns all enrollments for the learner without filtering or
-  // proper mapping. Replace with your implementation.
   return enrollments
-    .filter((enrollment) => enrollment.learnerId === learnerId)
-    .map(toCourseProgressStub);
+    .filter(
+      (enrollment) =>
+        enrollment.learnerId === learnerId && enrollment.status === 'in_progress',
+    )
+    .map(toCourseProgress)
+    .sort(
+      (a, b) =>
+        new Date(b.lastActivityAt).getTime() - new Date(a.lastActivityAt).getTime(),
+    );
 }
 
 export function computeCompletionPercentage(enrollment: CourseEnrollment): number {
@@ -45,13 +50,13 @@ export function isEnrollmentStale(lastActivityAt: string, now: Date = new Date()
   return diffDays > STALE_DAYS;
 }
 
-/** Temporary mapper — intentionally incomplete (wrong status, no stale flag). */
-function toCourseProgressStub(enrollment: CourseEnrollment): CourseProgress {
+function toCourseProgress(enrollment: CourseEnrollment): CourseProgress {
   return {
     courseId: enrollment.courseId,
     title: enrollment.title,
     completionPercentage: computeCompletionPercentage(enrollment),
     lastActivityAt: enrollment.lastActivityAt,
     status: 'in_progress',
+    isStale: isEnrollmentStale(enrollment.lastActivityAt),
   };
 }
