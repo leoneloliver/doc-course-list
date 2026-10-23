@@ -33,7 +33,7 @@ h1 {
 .toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.85rem 1.25rem;
+  gap: 0.75rem 0.85rem;
   align-items: end;
   margin: 0 0 1.25rem;
 }
@@ -41,28 +41,142 @@ h1 {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.78rem;
+  gap: 0.3rem;
+  font-size: 0.72rem;
   font-weight: 650;
-  color: #57534e;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #78716c;
 }
 
 .field select {
-  min-width: 16rem;
-  padding: 0.4rem 0.5rem;
+  appearance: none;
+  min-width: 16.5rem;
+  height: 2.6rem;
+  padding: 0 2.4rem 0 0.85rem;
   border: 1px solid #e7e0d8;
-  border-radius: 8px;
-  background: #fffcf8;
+  border-radius: 10px;
+  background-color: #fffcf8;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path d='M4 6l4 4 4-4' stroke='%2378716c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
   color: #1c1917;
   font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+  cursor: pointer;
 }
 
-.toggle {
-  display: flex;
-  gap: 0.4rem;
+.field select:hover {
+  border-color: #d6cdc3;
+}
+
+.field select:focus {
+  outline: none;
+  border-color: #c2410c;
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.16);
+}
+
+.chip {
+  display: inline-flex;
   align-items: center;
-  font-size: 0.88rem;
+  gap: 0.7rem;
+  position: relative;
+  height: 2.6rem;
+  padding: 0 0.85rem 0 0.7rem;
+  border: 1px solid #e7e0d8;
+  border-radius: 10px;
+  background: #fffcf8;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
   color: #44403c;
+  cursor: pointer;
+  user-select: none;
+}
+
+.chip:hover {
+  border-color: #d6cdc3;
+}
+
+.chip-on {
+  border-color: #fdba74;
+  background: #fff7ed;
+}
+
+.chip input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chip .switch,
+.chip .chip-copy {
+  pointer-events: none;
+}
+
+.chip:focus-within {
+  border-color: #c2410c;
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.16);
+}
+
+.switch {
+  flex: none;
+  width: 1.85rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  background: #d6cdc3;
+  position: relative;
+  transition: background 0.18s ease;
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 0.12rem;
+  left: 0.12rem;
+  width: 0.86rem;
+  height: 0.86rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.2);
+  transition: transform 0.18s ease;
+}
+
+.chip-on .switch {
+  background: #c2410c;
+}
+
+.chip-on .switch::after {
+  transform: translateX(0.75rem);
+}
+
+.chip-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.chip-copy small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #78716c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .switch::after {
+    transition: none;
+  }
 }
 
 .status {
@@ -131,7 +245,7 @@ h1 {
 }
 
 .bar {
-  height: 0.35rem;
+  height: 0.4rem;
   margin: 0.55rem 0 0.55rem;
   background: #e7e0d8;
   border-radius: 999px;
@@ -140,8 +254,51 @@ h1 {
 
 .bar span {
   display: block;
+  position: relative;
   height: 100%;
-  background: #c2410c;
+  width: var(--progress, 0%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ea580c, #c2410c);
+  transform-origin: left center;
+  animation: bar-fill 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.bar span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 70%
+  );
+  animation: bar-sheen 2.2s ease-in-out 0.7s infinite;
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes bar-sheen {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar span,
+  .bar span::after {
+    animation: none;
+  }
 }
 
 .badge {

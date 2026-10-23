@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { track } from './analytics';
 import type { ApiErrorBody, CourseProgress, LearnerProgressResponse } from './types';
 
@@ -99,13 +99,17 @@ export function App() {
             ))}
           </select>
         </label>
-        <label className="toggle">
+        <label className={quickWinsOnly ? 'chip chip-on' : 'chip'}>
           <input
             type="checkbox"
             checked={quickWinsOnly}
             onChange={(event) => setQuickWinsOnly(event.target.checked)}
           />
-          Quick wins (≤ {QUICK_WIN_MINUTES} min left)
+          <span className="switch" aria-hidden="true" />
+          <span className="chip-copy">
+            Quick wins
+            <small>≤ {QUICK_WIN_MINUTES} min left</small>
+          </span>
         </label>
       </div>
 
@@ -134,7 +138,7 @@ export function App() {
 
       {view.status === 'ready' && visibleCourses.length > 0 ? (
         <ul className="course-list">
-          {visibleCourses.map((course) => (
+          {visibleCourses.map((course, index) => (
             <li key={course.courseId}>
               <button
                 type="button"
@@ -154,7 +158,14 @@ export function App() {
                   aria-valuemin={0}
                   aria-valuemax={100}
                 >
-                  <span style={{ width: `${course.completionPercentage}%` }} />
+                  <span
+                    style={
+                      {
+                        '--progress': `${course.completionPercentage}%`,
+                        animationDelay: `${index * 90}ms`,
+                      } as CSSProperties
+                    }
+                  />
                 </div>
                 <p className="meta">
                   {course.remainingLessonCount}{' '}
